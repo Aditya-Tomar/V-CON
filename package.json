@@ -1,0 +1,16 @@
+{
+  "name": "v-converter",
+  "version": "1.0.0",
+  "description": "Create different quality od videos.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.3.2"
+  }
+}
