@@ -20,7 +20,7 @@ class App {
     }
 
     async connectToDB(){
-        
+
         MongooseWrapper.mongooseDb.connection.on('connecting', ()=> {
             console.log('Connecting with database.');
         });
