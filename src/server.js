@@ -1,7 +1,7 @@
 const express = require("express");
 const connect = require("../src/config/db-connection/db-connection");
 const { MongooseWrapper } = require("./config/db-connection/mongoose-wrapper");
-
+const cors = require("cors")
 class App {
 
     constructor(){}
@@ -10,6 +10,10 @@ class App {
         console.log("Initializing Application...");
         await this.connectToDB();
         this.createExpressApp();
+        // this.app.use(express.urlencoded())
+        this.app.use(cors({
+            origin: ['http://localhost:4200'] 
+        }));
         this.createRoutes();
         this.startListening();
         this.errorHandler();
