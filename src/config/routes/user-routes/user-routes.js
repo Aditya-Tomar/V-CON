@@ -9,7 +9,14 @@ class UsersRoutes {
     initRoutes(){
         const router = express.Router();
 
+        router.get("/:id", [], UsersApi.GetUserByid );
+
+        router.post("/create-users", [], UsersApi.CreateUser );
+
         router.post("/authenticate", [], UsersApi.Authenticate );
+
+        router.post("/deauthenticate", [], UsersApi.DeAuthenticate );
+
 
         return router;
     }
