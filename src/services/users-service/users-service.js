@@ -6,6 +6,16 @@ class UsersService {
 
     constructor(){ }
 
+    static async GetUserById(id) {
+        return UsersRepository.GetUserById(id).catch(err => {throw err;});
+    }
+
+    static async CreateUser(requestParams){
+        return UsersRepository.CreateUserProfile(requestParams).then( userData => {
+            return userData;
+        }).catch(err => {return err;});
+    }
+
     static async Authenticate(requestParams){
         return UsersRepository.AuthenticateUser(requestParams).then( userData => {
             UserAuthentication.verifyUserCredentials(requestParams, userData ).then( (isValid) => {
@@ -24,6 +34,11 @@ class UsersService {
                 }
             });
         }).catch(err => {});
+    }
+
+    static async DeAuthenticate(){
+        delete this.token[`${requestParams.name}-${requestParams.role}`];
+        return true;
     }
     
 }
