@@ -1,0 +1,27 @@
+{
+    "manifest_version": 3,
+    "name": "Wiyse",
+    "description": "Base Level Extension",
+    "version": "1.0",
+    "action": {
+      "default_popup": "hello.html"
+    },
+    "background": {
+      "service_worker": "./background.js"
+    },
+    "permissions": [
+      "activeTab",
+      "scripting"
+    ],
+    "content_scripts": [
+      {
+          "matches": ["<all_urls>"],
+          "css": ["./style.css"],
+          "js": [
+            "./jquery-3.7.0.min.js",
+            "./popup.js",
+            "./unpkg.com_sweetalert@2.1.2_dist_sweetalert.min.js"
+            ]
+        }
+    ]
+}

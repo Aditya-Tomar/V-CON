@@ -1,0 +1,53 @@
+
+1. To send data (video) from frontend to backend use POST method.
+2. Send video file as part of FormData Object.
+Why FormData ?
+
+    It is necessary, 
+    > when dealing with files like video or images, you need to use FormData obj to handle file upload process.
+        FormData is builtin js Obj that allows you to easily send and handle "multipart/form-data" requests, which are used to upload files.
+    > Video files are BINARY data and they cannot be sent directly in req body like JSON data.
+    "multipart/form-data" is the appropriate 'content type' as it allows the payload to include both the file data and associated metadata.
+    > FormData allows to include the video file and any additional metadata you might want to send along with the file. like filename, content-type and other information.
+    > Most Backend expects file uploads to be sent in "multipart/form-data" format.
+    
+    > There are alternate approach to send video data at backend.
+    >> You can convert video into Base64 encoded string at FE side and then send it as JSON obj in req body.
+    Downside -> Base64 encodeing significantly increases size of the video by 33%, leading to high bandwidth usage and slower upload time.
+
+    /* code
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const base64Video = reader.result.split(',')[1];
+            const videoData = { video: base64Video };
+
+            this.http.post(URI, videoData).subscribe(() => {});
+
+        }
+        reader.readAsDataURL(videoFile); // videoFile contains uploaded video at client side
+    */
+
+    >>Blob: You can use Blob Object (blobl represents raw data sequence) to send video directly in request body.
+    however, using blobs for large files may not be efficient as FormData or Base64, especially for file uploads.
+
+    /* code
+        const videoBlob = new Blob([videoData], { type: videoData.type});
+    
+        rest same http.post(uri, videoBlob);
+    */
+
+
+    But if we can send text data or JSON data directly why cant we send videos ??
+    Because videos file are binary data. HTTP request are designed to transmit text-based data, not binary data like video files.
+    HTTP is protocol primarily intended for transferring textual information, such as JSON, HTML, XML, or plain text.
+
+    Video, images, audio are binary files and are on-textual and contain raw binary data.
+    When you try to include binary data directly in the req body, it can lead to data corruption or data loss during transmission since
+    binary data might not be correctly interpreted by the server or the receiving end.
+
+    To handle binary files likes videos, you need a standardized way to encode and transmit the data in a format that can be correctly 
+    interpreted by both client and server. Thats why technique like FormData, Base64 encoding or Blob came into play.
+    These method encure that the binary data is transmitted and formatted properly by both client and server.
+
+    FormData in particulary designed to handle multipart/form-data req, which specially used for sending binary data like files along
+    textual data in single HTTP req.
